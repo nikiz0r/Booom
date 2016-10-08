@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
 
     private Rigidbody2D rb;
-    private float baseMoveSpeed = 3;
+    private float baseMoveSpeed = 5;
 
     // Use this for initialization
     void Start () {
@@ -22,5 +22,10 @@ public class PlayerScript : MonoBehaviour {
         var yDirection = Input.GetAxisRaw("Vertical") * baseMoveSpeed;
 
         rb.velocity = new Vector2(xDirection, yDirection);
+    }
+
+    void PlaceBomb()
+    {
+
     }
 }
