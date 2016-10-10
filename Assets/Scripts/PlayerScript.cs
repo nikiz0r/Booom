@@ -3,8 +3,12 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 
+    public GameObject bomb;
+
     private Rigidbody2D rb;
     private float baseMoveSpeed = 5;
+    private int bombLimit = 1;
+    private bool hasKick = false;
 
     // Use this for initialization
     void Start () {
@@ -14,6 +18,9 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Move();
+
+        if (Input.GetKeyDown(KeyCode.H))
+            PlaceBomb();
 	}
 
     void Move()
@@ -26,6 +33,7 @@ public class PlayerScript : MonoBehaviour {
 
     void PlaceBomb()
     {
-
+        if (bombLimit > 0)
+            Instantiate(bomb, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
     }
 }
