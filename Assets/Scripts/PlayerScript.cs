@@ -3,16 +3,20 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 
+    [Range(1, 2)]
+    public int playerNumber = 1;
     public GameObject bomb;
+    public bool dead = false;
+    public int bombLimit = 1;
 
     private Rigidbody2D rb;
     private float baseMoveSpeed = 5;
-    private int bombLimit = 1;
-    private bool hasKick = false;
+    private GameScript _gameScript;
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
+        _gameScript = (GameScript)FindObjectOfType(typeof(GameScript));
 	}
 	
 	// Update is called once per frame
@@ -34,6 +38,20 @@ public class PlayerScript : MonoBehaviour {
     void PlaceBomb()
     {
         if (bombLimit > 0)
-            Instantiate(bomb, new Vector3(transform.position.x, transform.position.y, -1), transform.rotation);
+        {
+            bombLimit--;
+            bomb.tag = playerNumber.ToString();
+            Instantiate(bomb, new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y - 0.5f), -1), transform.rotation);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Explosion"))
+        {
+            dead = true;
+            _gameScript.PlayerDied(playerNumber);
+            Destroy(gameObject);
+        }
     }
 }
