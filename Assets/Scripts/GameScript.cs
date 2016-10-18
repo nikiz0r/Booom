@@ -4,13 +4,18 @@ using System.Collections.Generic;
 
 public class GameScript : MonoBehaviour
 {
-
+    public List<GameObject> itemList = new List<GameObject>();
     public GameObject softBlockPrefab;
     private int deadPlayers = 0, deadPlayerNumber = -1;
 
     // Use this for initialization
     void Start()
     {
+        var ItemsGOs = Resources.LoadAll("Items", typeof(GameObject));
+
+        foreach (GameObject GO in ItemsGOs)
+            itemList.Add(GO);
+
         MapSetup();
     }
 

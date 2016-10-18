@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour {
     // enhanceble stats
     public int bombLimit = 1;
     public int firePower = 2;
-    public float baseMoveSpeed = 5;
+    public float baseMoveSpeed = 2;
 
     // Use this for initialization
     void Start () {
