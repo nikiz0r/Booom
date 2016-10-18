@@ -43,7 +43,7 @@ public class BombScript : MonoBehaviour {
 
     IEnumerator CreateExplosions(Vector2 direction)
     {
-        for (int i = 1; i < 3; i++)
+        for (int i = 1; i < _player.firePower; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i, levelMask);
 

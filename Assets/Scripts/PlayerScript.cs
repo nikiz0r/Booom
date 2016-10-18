@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour {
     public GameObject bomb;
     public bool dead = false;
     public int bombLimit = 1;
+    public int firePower = 2;
 
     private Rigidbody2D rb;
     private float baseMoveSpeed = 5;
@@ -21,18 +22,50 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Move();
+        if (playerNumber == 1)
+            MovePlayer1();
+        else
+            MovePlayer2();
+    }
 
-        if (Input.GetKeyDown(KeyCode.H))
-            PlaceBomb();
-	}
-
-    void Move()
+    void MovePlayer1()
     {
-        var xDirection = Input.GetAxisRaw("Horizontal") * baseMoveSpeed;
-        var yDirection = Input.GetAxisRaw("Vertical") * baseMoveSpeed;
+        if (Input.GetKey(KeyCode.A))
+            rb.velocity = new Vector2(-baseMoveSpeed, rb.velocity.y);
+        else if (Input.GetKey(KeyCode.D))
+            rb.velocity = new Vector2(baseMoveSpeed, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(0, rb.velocity.y);
 
-        rb.velocity = new Vector2(xDirection, yDirection);
+        if (Input.GetKey(KeyCode.W))
+            rb.velocity = new Vector2(rb.velocity.x, baseMoveSpeed);
+        else if (Input.GetKey(KeyCode.S))
+            rb.velocity = new Vector2(rb.velocity.x, -baseMoveSpeed);
+        else
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            PlaceBomb();
+    }
+
+    void MovePlayer2()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+            rb.velocity = new Vector2(-baseMoveSpeed, rb.velocity.y);
+        else if (Input.GetKey(KeyCode.RightArrow))
+            rb.velocity = new Vector2(baseMoveSpeed, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(0, rb.velocity.y);
+
+        if (Input.GetKey(KeyCode.UpArrow))
+            rb.velocity = new Vector2(rb.velocity.x, baseMoveSpeed);
+        else if (Input.GetKey(KeyCode.DownArrow))
+            rb.velocity = new Vector2(rb.velocity.x, -baseMoveSpeed);
+        else
+            rb.velocity = new Vector2(rb.velocity.x, 0);
+
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            PlaceBomb();
     }
 
     void PlaceBomb()
