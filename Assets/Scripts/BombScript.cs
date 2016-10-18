@@ -6,7 +6,7 @@ using System.Linq;
 public class BombScript : MonoBehaviour {
 
     public GameObject explosionPrefab;
-    public LayerMask levelMask;
+    public LayerMask hardBlockMask, softBlockMask;
     private bool exploded = false;
     private List<PlayerScript> _players = new List<PlayerScript>();
     private PlayerScript _player;
@@ -45,12 +45,22 @@ public class BombScript : MonoBehaviour {
     {
         for (int i = 1; i < _player.firePower; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i, levelMask);
+            RaycastHit2D hitSoftBlock = Physics2D.Raycast(transform.position, direction, i, softBlockMask);
 
-            if (!hit.collider)
+            if (hitSoftBlock.collider)
+            {
                 Instantiate(explosionPrefab, new Vector3(transform.position.x + (i * direction.x), transform.position.y + (i * direction.y)), explosionPrefab.transform.rotation);
-            else
                 break;
+            }
+            else
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, i, hardBlockMask);
+
+                if (!hit.collider)
+                    Instantiate(explosionPrefab, new Vector3(transform.position.x + (i * direction.x), transform.position.y + (i * direction.y)), explosionPrefab.transform.rotation);
+                else
+                    break;
+            }
 
             yield return new WaitForSeconds(.05f);
         }

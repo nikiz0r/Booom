@@ -7,12 +7,14 @@ public class PlayerScript : MonoBehaviour {
     public int playerNumber = 1;
     public GameObject bomb;
     public bool dead = false;
-    public int bombLimit = 1;
-    public int firePower = 2;
 
     private Rigidbody2D rb;
-    private float baseMoveSpeed = 5;
     private GameScript _gameScript;
+
+    // enhanceble stats
+    public int bombLimit = 1;
+    public int firePower = 2;
+    public float baseMoveSpeed = 5;
 
     // Use this for initialization
     void Start () {
