@@ -14,18 +14,14 @@ public class GameScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Cursor.visible = false;
+
         var ItemsGOs = Resources.LoadAll("Items", typeof(GameObject));
 
         foreach (GameObject GO in ItemsGOs)
             itemList.Add(GO);
 
         MapSetup();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void PlayerDied(int playerNumber)
@@ -113,7 +109,7 @@ public class GameScript : MonoBehaviour
 
     IEnumerator ResetGame()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("IntroScene");
     }
 }

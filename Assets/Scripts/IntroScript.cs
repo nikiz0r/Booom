@@ -8,6 +8,7 @@ public class IntroScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Cursor.visible = false;
         Destroy(gbLogo, 3f);
 	}
 	
