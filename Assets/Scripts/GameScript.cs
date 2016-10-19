@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameScript : MonoBehaviour
 {
     public List<GameObject> itemList = new List<GameObject>();
     public GameObject softBlockPrefab;
     private int deadPlayers = 0, deadPlayerNumber = -1;
+    public Text winnerText;
 
     // Use this for initialization
     void Start()
@@ -39,11 +42,13 @@ public class GameScript : MonoBehaviour
     void CheckPlayersDeath()
     {
         if (deadPlayers == 1)
-        {
-            Debug.Log(string.Format("Player {0} is the winner!", deadPlayerNumber == 1 ? 2 : 1));
-        }
+            winnerText.text = string.Format("Player {0} is the winner!", deadPlayerNumber == 1 ? 2 : 1);
         else
-            Debug.Log("The game ended in a draw!");
+            winnerText.text = "The game ended in a draw!";
+
+        winnerText.gameObject.SetActive(true);
+
+        StartCoroutine(ResetGame());
     }
 
     void MapSetup()
@@ -104,5 +109,11 @@ public class GameScript : MonoBehaviour
             if (prob <= 7)
                 Instantiate(softBlockPrefab, transf, Quaternion.identity);
         }
+    }
+
+    IEnumerator ResetGame()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("IntroScene");
     }
 }
